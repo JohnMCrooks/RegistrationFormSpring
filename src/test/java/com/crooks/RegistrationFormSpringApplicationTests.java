@@ -84,15 +84,15 @@ public class RegistrationFormSpringApplicationTests {
 
 	@Test
 	public void cTestGet() throws Exception {
-		ResultActions ra =  mockMvc.perform(		//Capture result of the perform method in "ra"
+		ResultActions ra =  mockMvc.perform(		//Capture result of the Get route in "ra"
 				MockMvcRequestBuilders.get("/user")
 		);
-		MvcResult result = ra.andReturn();
-		MockHttpServletResponse response =  result.getResponse();
-		String json = response.getContentAsString();
+		MvcResult result = ra.andReturn();			//Dig into the results to find...
+		MockHttpServletResponse response =  result.getResponse();  //The servers response which holds
+		String json = response.getContentAsString();           //a Json  String
 
 		ObjectMapper om = new ObjectMapper();
-		ArrayList<HashMap<String,String>> userMaps = om.readValue(json, ArrayList.class);
+		ArrayList<HashMap<String,String>> userMaps = om.readValue(json, ArrayList.class); //Converting the Json String to something that can be used in java
 
 		Assert.assertTrue(userMaps.size()==1 && userMaps.get(0).get("username").equals("Bob"));
 	}
